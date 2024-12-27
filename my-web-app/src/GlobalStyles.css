@@ -1,0 +1,75 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.input {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  width: 250px;
+}
+
+.loginButton {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.loginButton:hover {
+  background-color: #0056b3;
+}
+
+.socialContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.socialButton {
+  display: flex;
+  align-items: center;
+  background-color: #ddd;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  width: 120px;
+}
+
+.socialIcon {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.registerContainer {
+  margin-top: 20px;
+}
+
+.registerText {
+  margin-top: 10px;
+}
+
+.forgotPassword {
+  color: #007bff;
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+
+.forgotPasswordText {
+  color: #007bff;
+}
