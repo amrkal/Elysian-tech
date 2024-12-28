@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom'; // Use React Router for navigation
+import { useNavigate } from 'react-router-dom';  // Updated to useNavigate
 import axios from 'axios';
-import GlobalStyles from '../GlobalStyles';
-import './ForgotPasswordPage.css'; // Assuming you're using a separate CSS file for styles
-
+import GlobalStyles from '../GlobalStyles.css';  // Assuming you're using CSS-in-JS or a global CSS file
+import './forgotPasswordPage.css';  // Ensure the file is correctly named and located
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const history = useHistory(); // For navigation
+  const navigate = useNavigate();  // Updated to useNavigate
 
   // Function to validate email format
   const isValidEmail = (email) => {
@@ -29,16 +28,16 @@ const ForgotPasswordPage = () => {
       return;
     }
 
-    setError(''); // Clear previous error
+    setError('');  // Clear previous error
     setLoading(true);
 
     try {
       // Make the API call to the backend for password reset
       const response = await axios.post('/users/forgot-password', { email });
-      
+
       setLoading(false);
       alert(`A password reset link has been sent to ${email}.`);
-      history.push('/login'); // Navigate back to the LoginPage after successful reset request
+      navigate('/login');  // Navigate back to the LoginPage after successful reset request
     } catch (error) {
       setLoading(false);
       console.error('Error occurred:', error);
@@ -63,7 +62,7 @@ const ForgotPasswordPage = () => {
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
-            setError(''); // Clear error when user types
+            setError('');  // Clear error when user types
           }}
         />
       </div>
@@ -83,7 +82,7 @@ const ForgotPasswordPage = () => {
       {/* Go Back to Login */}
       <div className="register-container">
         <p>Remembered your password?</p>
-        <button onClick={() => history.push('/login')} className="link-button">
+        <button onClick={() => navigate('/login')} className="link-button">
           Log in
         </button>
       </div>

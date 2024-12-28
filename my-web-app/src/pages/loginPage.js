@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Icon from 'react-icons/md'; // Use react-icons for icons
+import { MdEmail, MdLock, MdVisibility, MdVisibilityOff } from 'react-icons/md'; // Updated imports for React Icons
 import { ToastContainer, toast } from 'react-toastify'; // For toasts
 import 'react-toastify/dist/ReactToastify.css'; // For toast styling
-import GlobalStyles from '../GlobalStyles'; // Assuming you are using CSS-in-JS or a global CSS file
-
+import GlobalStyles from '../GlobalStyles.css'; // Assuming you are using CSS-in-JS or a global CSS file
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -26,7 +25,7 @@ const LoginPage = () => {
     try {
       const response = await axios.post('/users/login', userData); // Assuming you have a login route
       if (response.status === 200) {
-        navigate.push('/welcome'); // Navigate to the WelcomePage on successful login
+        navigate('/welcome'); // Navigate to the WelcomePage on successful login
       } else {
         setError('Invalid credentials');
       }
@@ -40,7 +39,7 @@ const LoginPage = () => {
     try {
       const response = await axios.get('/auth/login/google');
       console.log('Google Login successful:', response.data);
-      navigate.push('/welcome');
+      navigate('/welcome');
     } catch (error) {
       console.error('Google Login failed:', error);
       toast.error('Google Login failed');
@@ -51,7 +50,7 @@ const LoginPage = () => {
     try {
       const response = await axios.get('/auth/login/facebook');
       console.log('Facebook Login successful:', response.data);
-      navigate.push('/welcome');
+      navigate('/welcome');
     } catch (error) {
       console.error('Facebook Login failed:', error);
       toast.error('Facebook Login failed');
@@ -68,7 +67,7 @@ const LoginPage = () => {
 
       {/* Email Input */}
       <div style={GlobalStyles.inputContainer}>
-        <Icon name="email" size={20} style={GlobalStyles.icon} />
+        <MdEmail size={20} style={GlobalStyles.icon} />
         <input
           type="email"
           style={GlobalStyles.input}
@@ -80,7 +79,7 @@ const LoginPage = () => {
 
       {/* Password Input */}
       <div style={GlobalStyles.inputContainer}>
-        <Icon name="lock" size={20} style={GlobalStyles.icon} />
+        <MdLock size={20} style={GlobalStyles.icon} />
         <input
           type={passwordVisible ? 'text' : 'password'}
           style={GlobalStyles.input}
@@ -91,12 +90,12 @@ const LoginPage = () => {
         <button
           onClick={() => setPasswordVisible(!passwordVisible)}
           style={GlobalStyles.icon}>
-          <Icon name={passwordVisible ? 'visibility-off' : 'visibility'} size={20} />
+          {passwordVisible ? <MdVisibilityOff size={20} /> : <MdVisibility size={20} />}
         </button>
       </div>
 
       {/* Forgot Password */}
-      <button onClick={() => navigate.push('/forgot-password')} style={GlobalStyles.forgotPassword}>
+      <button onClick={() => navigate('/forgot-password')} style={GlobalStyles.forgotPassword}>
         Forgot password?
       </button>
 
@@ -128,7 +127,7 @@ const LoginPage = () => {
       {/* Register */}
       <p style={GlobalStyles.registerText}>Have no account yet?</p>
       <div style={GlobalStyles.registerContainer}>
-        <button style={GlobalStyles.loginButton} onClick={() => navigate.push('/register')}>
+        <button style={GlobalStyles.loginButton} onClick={() => navigate('/register')}>
           Register
         </button>
       </div>

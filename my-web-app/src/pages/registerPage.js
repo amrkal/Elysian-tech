@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';  // React Router for navigation
+import { useNavigate } from 'react-router-dom';  // Updated to useNavigate
 import axios from 'axios';
 import { FaUser, FaLock, FaPhone, FaEnvelope } from 'react-icons/fa'; // React Icons
-import GlobalStyles from '../GlobalStyles';
+import GlobalStyles from '../GlobalStyles.css';  // Assuming you're using CSS-in-JS or a global CSS file
 import { ToastContainer, toast } from 'react-toastify'; // For toast notifications
 import 'react-toastify/dist/ReactToastify.css'; // Toast styling
-
 
 const RegistrationPage = () => {
   const [name, setName] = useState('');
@@ -16,25 +15,8 @@ const RegistrationPage = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
   
-  const history = useHistory(); // React Router's useHistory for navigation
+  const navigate = useNavigate();  // Updated to useNavigate
 
-  // Fetch random message and show toast
-  const fetchRandomMessage = async () => {
-    try {
-      const randomMessageResponse = await axios.get('http://192.168.0.178:5001/random-message');
-      const randomMessage = randomMessageResponse.data.message;
-
-      // Show toast message with the random content from the Node.js server
-      toast.success(`Welcome! ${randomMessage}`);
-    } catch (error) {
-      setError(error.response?.data?.message || 'Something went wrong');
-      console.error('Error fetching random message:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchRandomMessage();  // Fetch message when page loads
-  }, []);
 
   const handleRegister = async () => {
     // Input validation
@@ -72,7 +54,7 @@ const RegistrationPage = () => {
     try {
       const response = await axios.post('/users/create', userData);
       if (response.status === 201) {
-        history.push('/welcome'); // Navigate to WelcomePage on success
+        navigate('/welcome');  // Navigate to WelcomePage on success
       } else {
         setError('Unexpected response from server');
       }
@@ -87,33 +69,33 @@ const RegistrationPage = () => {
   };
 
   return (
-    <div style={GlobalStyles.container}>
+    <div className="container">
       {/* Logo */}
-      <div style={GlobalStyles.logoContainer}>
-        <img src="/path-to-your-logo.png" alt="Logo" style={GlobalStyles.logo} />
+      <div className="logo-container">
+        <img src="/path-to-your-logo.png" alt="Logo" className="logo" />
       </div>
-      <h2 style={GlobalStyles.title}>Register</h2>
+      <h2 className="title">Register</h2>
 
       {/* Error Message */}
-      {error && <p style={styles.errorText}>{error}</p>}
+      {error && <p className="error-text">{error}</p>}
 
       {/* Name and Surname in Same Row */}
-      <div style={GlobalStyles.rowContainer}>
-        <div style={[GlobalStyles.inputContainer, GlobalStyles.halfWidth]}>
-          <FaUser style={GlobalStyles.icon} />
+      <div className="row-container">
+        <div className="input-container half-width">
+          <FaUser className="icon" />
           <input
             type="text"
-            style={GlobalStyles.input}
+            className="input"
             placeholder="Name"
             value={name}
             onChange={(e) => { setName(e.target.value); setError(''); }}
           />
         </div>
-        <div style={[GlobalStyles.inputContainer, GlobalStyles.halfWidth]}>
-          <FaUser style={GlobalStyles.icon} />
+        <div className="input-container half-width">
+          <FaUser className="icon" />
           <input
             type="text"
-            style={GlobalStyles.input}
+            className="input"
             placeholder="Surname"
             value={surname}
             onChange={(e) => { setSurname(e.target.value); setError(''); }}
@@ -122,11 +104,11 @@ const RegistrationPage = () => {
       </div>
 
       {/* Phone Number Input */}
-      <div style={GlobalStyles.inputContainer}>
-        <FaPhone style={GlobalStyles.icon} />
+      <div className="input-container">
+        <FaPhone className="icon" />
         <input
           type="tel"
-          style={GlobalStyles.input}
+          className="input"
           placeholder="Phone Number"
           value={phone}
           onChange={(e) => { setPhone(e.target.value); setError(''); }}
@@ -134,11 +116,11 @@ const RegistrationPage = () => {
       </div>
 
       {/* Email Input */}
-      <div style={GlobalStyles.inputContainer}>
-        <FaEnvelope style={GlobalStyles.icon} />
+      <div className="input-container">
+        <FaEnvelope className="icon" />
         <input
           type="email"
-          style={GlobalStyles.input}
+          className="input"
           placeholder="Email"
           value={email}
           onChange={(e) => { setEmail(e.target.value); setError(''); }}
@@ -146,11 +128,11 @@ const RegistrationPage = () => {
       </div>
 
       {/* Password Input */}
-      <div style={GlobalStyles.inputContainer}>
-        <FaLock style={GlobalStyles.icon} />
+      <div className="input-container">
+        <FaLock className="icon" />
         <input
           type="password"
-          style={GlobalStyles.input}
+          className="input"
           placeholder="Password"
           value={password}
           onChange={(e) => { setPassword(e.target.value); setError(''); }}
@@ -158,11 +140,11 @@ const RegistrationPage = () => {
       </div>
 
       {/* Confirm Password Input */}
-      <div style={GlobalStyles.inputContainer}>
-        <FaLock style={GlobalStyles.icon} />
+      <div className="input-container">
+        <FaLock className="icon" />
         <input
           type="password"
-          style={GlobalStyles.input}
+          className="input"
           placeholder="Confirm Password"
           value={confirmPassword}
           onChange={(e) => { setConfirmPassword(e.target.value); setError(''); }}
@@ -170,14 +152,14 @@ const RegistrationPage = () => {
       </div>
 
       {/* Register Button */}
-      <button style={GlobalStyles.loginButton} onClick={handleRegister}>
+      <button className="loginButton" onClick={handleRegister}>
         Register
       </button>
 
       {/* Go Back to Login */}
-      <div style={GlobalStyles.registerContainer}>
-        <p style={GlobalStyles.registerText}>Already have an account?</p>
-        <button onClick={() => history.push('/login')} style={GlobalStyles.registerLink}>
+      <div className="register-container">
+        <p className="register-text">Already have an account?</p>
+        <button onClick={() => navigate('/')} className="register-link">
           Log in
         </button>
       </div>
@@ -186,15 +168,6 @@ const RegistrationPage = () => {
       <ToastContainer />
     </div>
   );
-};
-
-const styles = {
-  errorText: {
-    color: 'red',
-    fontSize: 14,
-    marginBottom: 10,
-    alignSelf: 'flex-start',
-  },
 };
 
 export default RegistrationPage;

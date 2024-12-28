@@ -1,23 +1,21 @@
-import logo from './logo.svg';
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';  // Import Routes and Route components
 import './App.css';
-
+import LoginPage from './pages/loginPage';  // Assuming your LoginPage component is in the same directory
+import WelcomePage from './pages/welcomePage';  // Assuming you have a WelcomePage
+import ForgotPasswordPage from './pages/forgotPasswordPage';  // Ensure correct casing
+import RegistrationPage from './pages/registerPage';  // Ensure correct casing
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <Routes>
+          <Route path="/" element={<LoginPage />} />
+          <Route path="/welcome" element={<WelcomePage />} />
+          <Route path="/register" element={<RegistrationPage />} />  {/* Corrected the path */}
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />  {/* Corrected the path */}
+        </Routes>
       </header>
     </div>
   );

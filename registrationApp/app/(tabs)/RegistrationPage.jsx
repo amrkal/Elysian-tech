@@ -18,6 +18,7 @@ import { router } from 'expo-router';
 import GlobalStyles from '../../styles/GlobalStyles';
 import axiosInstance from '../../services/axiosInstance';
 import axios from 'axios';
+import Toast from 'react-toastify';
 
 const RegistrationPage = () => {
   const [name, setName] = useState('');
@@ -28,31 +29,46 @@ const RegistrationPage = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
 
+  const fetchRandomMessage = async () => {
+    try {
+      console.log('Random message:');
+      // Fetch random message from Node.js server
+      const randomMessageResponse = await axios.get('http://192.168.0.178:5001/random-message');
+      const randomMessage = randomMessageResponse.data.message;
+      console.log('Random message:');
+      // Show toast message with the random content from the Node.js server
 
-    // Fetch random message and show toast
-    const fetchRandomMessage = async () => {
-      try {
-        // Fetch random message from Node.js server
-        const randomMessageResponse = await axios.get('http://192.168.0.178:5001/random-message');
-        const randomMessage = randomMessageResponse.data.message;
+      Toast.show({
+        type: 'success',
+        position: 'bottom',
+        text1: 'Welcome!',
+        text2: randomMessage,
+      });
   
-        // Show toast message with the random content from the Node.js server
+    } catch (error) {
+      if (error.response && error.response.status === 429) {
+        const retryAfter = error.response.data.retryAfter; // Get retry time
         Toast.show({
-          type: 'success',
+          type: 'error',
           position: 'bottom',
-          text1: 'Welcome!',
-          text2: randomMessage,
+          text1: `Rate limit exceeded. Try again in ${retryAfter} seconds.`,
         });
   
-      } catch (error) {
+        // Optionally, retry after the "retryAfter" time
+        setTimeout(() => {
+          fetchRandomMessage();  // Retry fetching the message
+        }, retryAfter * 1000);
+      } else {
         setError(error.response?.data?.message || 'Something went wrong');
         console.error('Error fetching random message:', error);
       }
-    };
+    }
+  };
   
-    useEffect(() => {
-      fetchRandomMessage();  // Fetch message when page loads
-    }, []);  // Empty dependency array means it will only run once when the page loads
+  useEffect(() => {
+    fetchRandomMessage();  // Fetch message when page loads
+  }, []);  // Empty dependency array means it will only run once when the page loads
+  
   
 
   const handleRegister = async () => {

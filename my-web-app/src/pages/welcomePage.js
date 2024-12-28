@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom'; // For navigation
+import { useNavigate } from 'react-router-dom'; // Use useNavigate instead of useHistory
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify'; // Import Toastify
 import 'react-toastify/dist/ReactToastify.css'; // CSS for toast styling
-import GlobalStyles from '../GlobalStyles'; // Assuming you are using CSS-in-JS or a global CSS file
-
-
+import GlobalStyles from '../GlobalStyles.css'; // Assuming you are using CSS-in-JS or a global CSS file
 
 const WelcomePage = () => {
   const [error, setError] = useState('');
-  const history = useHistory(); // For navigation
+  const navigate = useNavigate(); // For navigation (useNavigate instead of useHistory)
 
   // Fetch random message and show toast
   const fetchRandomMessage = async () => {
@@ -47,7 +45,7 @@ const WelcomePage = () => {
       {/* Go to Home or Login */}
       <button
         style={GlobalStyles.loginButton}
-        onClick={() => history.push('/login')}
+        onClick={() => navigate('/login')} // Use navigate instead of history.push
       >
         Go to Login
       </button>
