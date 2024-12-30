@@ -13,8 +13,8 @@ function App() {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/welcome" element={<WelcomePage />} />
-          <Route path="/register" element={<RegistrationPage />} />  {/* Corrected the path */}
-          <Route path="/forgot-password" element={<ForgotPasswordPage />} />  {/* Corrected the path */}
+          <Route path="/register" element={<RegistrationPage />} /> 
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} /> 
         </Routes>
       </header>
     </div>

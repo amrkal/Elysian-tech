@@ -1,59 +1,54 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';  // Updated to useNavigate
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import GlobalStyles from '../GlobalStyles.css';  // Assuming you're using CSS-in-JS or a global CSS file
-import './forgotPasswordPage.css';  // Ensure the file is correctly named and located
+import './forgotPasswordPage.css';
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const navigate = useNavigate();  // Updated to useNavigate
+  const navigate = useNavigate();
 
-  // Function to validate email format
-  const isValidEmail = (email) => {
+  // Validate email format
+  const isValidEmail = (val) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+    return emailRegex.test(val);
   };
 
-  // Handle sending the reset email to the backend
+  // Handle sending the reset email
   const handleSendEmail = async () => {
     if (!email) {
       setError('Please enter your email address.');
       return;
     }
-
     if (!isValidEmail(email)) {
       setError('Please enter a valid email address.');
       return;
     }
 
-    setError('');  // Clear previous error
+    setError('');
     setLoading(true);
 
     try {
-      // Make the API call to the backend for password reset
-      const response = await axios.post('/users/forgot-password', { email });
-
+      await axios.post('/users/forgot-password', { email });
       setLoading(false);
       alert(`A password reset link has been sent to ${email}.`);
-      navigate('/login');  // Navigate back to the LoginPage after successful reset request
-    } catch (error) {
+      navigate('/');
+    } catch (err) {
       setLoading(false);
-      console.error('Error occurred:', error);
-      setError(error.response?.data?.message || 'Something went wrong');
+      setError(err.response?.data?.message || 'Something went wrong');
+      console.error('Error occurred:', err);
     }
   };
 
   return (
     <div className="forgot-password-container">
-      {/* Logo */}
       <div className="logo-container">
-        <img src="/path/to/logo.png" alt="Logo" className="logo" />
+        <img src="/Logo.png" alt="Logo" className="logo" />
       </div>
-      <h2>Forgot Password</h2>
 
-      {/* Email Input */}
+      <h2 className="title">Forgot Password</h2>
+
       <div className="input-container">
         <input
           type="email"
@@ -62,27 +57,24 @@ const ForgotPasswordPage = () => {
           value={email}
           onChange={(e) => {
             setEmail(e.target.value);
-            setError('');  // Clear error when user types
+            setError('');
           }}
         />
       </div>
 
-      {/* Error Message */}
       {error && <p className="error-text">{error}</p>}
 
-      {/* Send Email Button */}
       <button
-        className="submit-button"
+        className="btn primary-btn"
         onClick={handleSendEmail}
         disabled={loading}
       >
         {loading ? <span>Loading...</span> : 'Send Reset Link'}
       </button>
 
-      {/* Go Back to Login */}
       <div className="register-container">
         <p>Remembered your password?</p>
-        <button onClick={() => navigate('/login')} className="link-button">
+        <button onClick={() => navigate('/')} className="btn register-link">
           Log in
         </button>
       </div>

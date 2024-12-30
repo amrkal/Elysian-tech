@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';  // Updated to useNavigate
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Updated to useNavigate
 import axios from 'axios';
 import { FaUser, FaLock, FaPhone, FaEnvelope } from 'react-icons/fa'; // React Icons
-import GlobalStyles from '../GlobalStyles.css';  // Assuming you're using CSS-in-JS or a global CSS file
 import { ToastContainer, toast } from 'react-toastify'; // For toast notifications
 import 'react-toastify/dist/ReactToastify.css'; // Toast styling
+
+// Import the CSS that gives it the same style as your LoginPage
+import './registerPage.css';
 
 const RegistrationPage = () => {
   const [name, setName] = useState('');
@@ -14,9 +16,8 @@ const RegistrationPage = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
-  
-  const navigate = useNavigate();  // Updated to useNavigate
 
+  const navigate = useNavigate(); // Updated to useNavigate
 
   const handleRegister = async () => {
     // Input validation
@@ -37,11 +38,11 @@ const RegistrationPage = () => {
       return;
     }
     if (!/^\d{10}$/.test(phone)) {
-      setError('Please enter a valid phone number.');
+      setError('Please enter a valid 10-digit phone number.');
       return;
     }
 
-    setError('');  // Clear previous error
+    setError(''); // Clear previous error
 
     const userData = {
       name,
@@ -54,7 +55,7 @@ const RegistrationPage = () => {
     try {
       const response = await axios.post('/users/create', userData);
       if (response.status === 201) {
-        navigate('/welcome');  // Navigate to WelcomePage on success
+        navigate('/welcome'); // Navigate to WelcomePage on success
       } else {
         setError('Unexpected response from server');
       }
@@ -69,11 +70,12 @@ const RegistrationPage = () => {
   };
 
   return (
-    <div className="container">
+    <div className="registration-container">
       {/* Logo */}
       <div className="logo-container">
-        <img src="/path-to-your-logo.png" alt="Logo" className="logo" />
+        <img src="/Logo.png" alt="Logo" className="logo" />
       </div>
+
       <h2 className="title">Register</h2>
 
       {/* Error Message */}
@@ -88,7 +90,10 @@ const RegistrationPage = () => {
             className="input"
             placeholder="Name"
             value={name}
-            onChange={(e) => { setName(e.target.value); setError(''); }}
+            onChange={(e) => {
+              setName(e.target.value);
+              setError('');
+            }}
           />
         </div>
         <div className="input-container half-width">
@@ -98,7 +103,10 @@ const RegistrationPage = () => {
             className="input"
             placeholder="Surname"
             value={surname}
-            onChange={(e) => { setSurname(e.target.value); setError(''); }}
+            onChange={(e) => {
+              setSurname(e.target.value);
+              setError('');
+            }}
           />
         </div>
       </div>
@@ -111,7 +119,10 @@ const RegistrationPage = () => {
           className="input"
           placeholder="Phone Number"
           value={phone}
-          onChange={(e) => { setPhone(e.target.value); setError(''); }}
+          onChange={(e) => {
+            setPhone(e.target.value);
+            setError('');
+          }}
         />
       </div>
 
@@ -123,7 +134,10 @@ const RegistrationPage = () => {
           className="input"
           placeholder="Email"
           value={email}
-          onChange={(e) => { setEmail(e.target.value); setError(''); }}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setError('');
+          }}
         />
       </div>
 
@@ -135,7 +149,10 @@ const RegistrationPage = () => {
           className="input"
           placeholder="Password"
           value={password}
-          onChange={(e) => { setPassword(e.target.value); setError(''); }}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            setError('');
+          }}
         />
       </div>
 
@@ -147,19 +164,22 @@ const RegistrationPage = () => {
           className="input"
           placeholder="Confirm Password"
           value={confirmPassword}
-          onChange={(e) => { setConfirmPassword(e.target.value); setError(''); }}
+          onChange={(e) => {
+            setConfirmPassword(e.target.value);
+            setError('');
+          }}
         />
       </div>
 
       {/* Register Button */}
-      <button className="loginButton" onClick={handleRegister}>
+      <button className="btn primary-btn" onClick={handleRegister}>
         Register
       </button>
 
       {/* Go Back to Login */}
       <div className="register-container">
         <p className="register-text">Already have an account?</p>
-        <button onClick={() => navigate('/')} className="register-link">
+        <button onClick={() => navigate('/')} className="btn register-link">
           Log in
         </button>
       </div>
