@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import axiosInstance from '../services/axiosInstance';
 import './forgotPasswordPage.css';
 
 const ForgotPasswordPage = () => {
@@ -30,7 +30,7 @@ const ForgotPasswordPage = () => {
     setLoading(true);
 
     try {
-      await axios.post('/users/forgot-password', { email });
+      await axiosInstance.post('/users/forgot-password', { email });
       setLoading(false);
       alert(`A password reset link has been sent to ${email}.`);
       navigate('/');

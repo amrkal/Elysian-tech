@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Updated to useNavigate
-import axios from 'axios';
+import axiosInstance from '../services/axiosInstance';
+import  axiosInstance2  from '../services/axiosInstance';
 import { FaUser, FaLock, FaPhone, FaEnvelope } from 'react-icons/fa'; // React Icons
 import { ToastContainer, toast } from 'react-toastify'; // For toast notifications
 import 'react-toastify/dist/ReactToastify.css'; // Toast styling
@@ -52,8 +53,10 @@ const RegistrationPage = () => {
       password,
     };
 
+
     try {
-      const response = await axios.post('/users/create', userData);
+      console.log('Register button clicked');
+      const response = await axiosInstance.post('/users/create', userData);
       if (response.status === 201) {
         navigate('/welcome'); // Navigate to WelcomePage on success
       } else {

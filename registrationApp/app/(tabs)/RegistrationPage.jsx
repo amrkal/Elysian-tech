@@ -33,7 +33,7 @@ const RegistrationPage = () => {
     try {
       console.log('Random message:');
       // Fetch random message from Node.js server
-      const randomMessageResponse = await axios.get('http://192.168.0.178:5001/random-message');
+      const randomMessageResponse = await axios.get('/random-message');
       const randomMessage = randomMessageResponse.data.message;
       console.log('Random message:');
       // Show toast message with the random content from the Node.js server
